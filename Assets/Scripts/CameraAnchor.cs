@@ -4,21 +4,41 @@ using UnityEngine;
 
 public class CameraAnchor : MonoBehaviour
 {
+    List<Transform> targets;
+
     public float speed = 1;
 
-    // Start is called before the first frame update
-    void Start()
+	private void Awake()
+	{
+        targets = new List<Transform>();
+	}
+
+    public void AddTarget(Transform target)
     {
-        
+        targets.Add(target);
+        Ship ship = target.gameObject.GetComponent<Ship>();
+        if( ship != null ) {
+            targets.Add(ship.GetAimer().transform);
+        }
+    }
+    public void RemoveTarget(Transform target)
+    {
+        targets.Remove(target);
     }
 
-    // Update is called once per frame
-    void Update()
+	// Update is called once per frame
+	void Update()
     {
-        float deltaX = Input.GetAxis("Horizontal");
-        float deltaZ = Input.GetAxis("Vertical");
-        Vector3 translation = new Vector3(deltaX, 0, deltaZ).normalized * speed;
+        if( targets.Count == 0 ) { return; }
 
-        transform.position += translation;
+        float x = 0f, y = 0f, z = 0f;
+        foreach( Transform t in targets ) {
+            x += t.position.x;
+            y += t.position.y;
+            z += t.position.z;
+        }
+
+        Vector3 averagePosition = new Vector3(x / targets.Count, y / targets.Count, z / targets.Count);
+        transform.position = averagePosition;
     }
 }

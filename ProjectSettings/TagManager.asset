@@ -13,10 +13,10 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Ship
+  - Projectile
+  - Explosion
+  - Terrain
   - 
   - 
   - 
@@ -38,9 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: StarField
+    uniqueID: 534587503
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: StarField
-    uniqueID: 534587503
+  - name: 
+    uniqueID: 3672065415
     locked: 0

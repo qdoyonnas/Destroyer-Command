@@ -14,6 +14,8 @@ public class StarField : MonoBehaviour
     public Vector3 minZone = new Vector3(-20, 0, -20);
     public Vector3 maxZone = new Vector3(20, 0, 20);
 
+    public float parallaxFactor = 0.05f;
+
     Vector3 lastCameraPosition = new Vector3();
 
     // Start is called before the first frame update
@@ -57,7 +59,7 @@ public class StarField : MonoBehaviour
 
             for( int i = transform.childCount - 1; i >= 0; i-- ) {
                 Transform star = transform.GetChild(i);
-                star.position -= translation * star.localScale.magnitude;
+                star.position -= (translation * star.localScale.magnitude) * parallaxFactor;
 
                 if( star.localPosition.magnitude > maxZone.x ) {
                     star.localPosition = new Vector3(-star.localPosition.x, star.localPosition.y, -star.localPosition.z);

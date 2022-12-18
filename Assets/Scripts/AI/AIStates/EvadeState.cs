@@ -19,6 +19,13 @@ public class EvadeState : AIState
 	override public void Initialize()
 	{
 		hazard = Trigger(controls, wideTriggerAngle);
+		Vector3 delta = hazard.transform.position - ship.transform.position;
+		float angle = Vector3.SignedAngle(ship.transform.forward, delta, Vector3.up);
+		if( angle < 0f ) {
+			controls.inputs["turn"] = 1f;
+		} else {
+			controls.inputs["turn"] = -1f;
+		}
 	}
 
 	override public void Update()
@@ -27,17 +34,11 @@ public class EvadeState : AIState
 
 		Vector3 delta = hazard.transform.position - ship.transform.position;
 		float angle = Vector3.SignedAngle(ship.transform.forward, delta, Vector3.up);
-		if( angle < 0f ) {
-			controls.inputs["turn"] = 1f;
-		} else {
-			controls.inputs["turn"] = -1f;
-		}
-
 		float targetSpeed = ship.maxSpeed * (Mathf.Abs(angle) / 180);
 		if( ship.GetSpeed() > targetSpeed) {
 			controls.inputs["forward"] = -1f;
 		} else if( ship.GetSpeed() < targetSpeed ) {
-			controls.inputs["forward" ] = 0f;
+			controls.inputs["forward" ] = 1f;
 		} else {
 			controls.inputs["forward"] = 0f;
 		}
@@ -46,14 +47,8 @@ public class EvadeState : AIState
 	bool CheckStateChange()
 	{
 		bool evade = true;
-		if( !hazard ) {
+		if( !hazard || RaycastAgainstHazard(controls, hazard) == null ) {
 			evade = false;
-		} else {
-			Vector3 delta = hazard.transform.position - ship.transform.position;
-			float angle = Vector3.Angle(ship.transform.forward, delta);
-			if( angle > wideTriggerAngle ) {
-				evade = false;
-			}
 		}
 
 		if( !evade ) {
@@ -67,25 +62,45 @@ public class EvadeState : AIState
 	override public void End()
 	{
 		controls.inputs["turn"] = 0f;
+		controls.inputs["forward"] = 0f;
+	}
+
+	public static Hazard RaycastAgainstHazard(AIControls controls, Hazard hazard)
+	{
+		Ship ship = controls.GetShip();
+
+		Vector3 delta = hazard.transform.position - ship.transform.position;
+		Vector3 deltaNorm = delta.normalized;
+		float angle = Vector3.SignedAngle(ship.transform.forward, delta, Vector3.up);
+
+		Vector3 triggerVector;
+		if( angle < triggerAngle ) {
+			triggerVector = deltaNorm;
+		} else {
+			triggerVector = Vector3.RotateTowards(controls.transform.forward, deltaNorm, Mathf.Deg2Rad * triggerAngle, 0f);
+		}
+
+		RaycastHit[] hits = Physics.RaycastAll(controls.transform.position, triggerVector, triggerDistance);
+		foreach( RaycastHit hit in hits ) {
+			Hazard hitHazard = hit.collider.GetComponentInParent<Hazard>();
+			if( hitHazard ) {
+				return hitHazard;
+			}
+		}
+
+		return null;
 	}
 
 	public static Hazard Trigger(AIControls controls, float triggerAngle = triggerAngle, float triggerDistance = triggerDistance)
 	{
 		Ship ship = controls.GetShip();
 
-		Hazard hazardest = null;
-		float smallestAngle = triggerAngle;
-		foreach( Hazard hazard in controls.hazards ) {
-			Vector3 delta = hazard.transform.position - ship.transform.position;
-			float angle = Vector3.Angle(ship.transform.forward, delta);
-			if( angle < triggerAngle && delta.magnitude < triggerDistance ) {
-				if( angle < smallestAngle ) {
-					hazardest = hazard;
-					smallestAngle = angle;
-				}
+		foreach( Hazard hazard in controls.hazardSense.hazards ) {
+			Hazard hazardest = RaycastAgainstHazard(controls, hazard);
+			if( hazardest ) {
+				return hazardest;
 			}
 		}
-
-		return hazardest;
+		return null;
 	}
 }

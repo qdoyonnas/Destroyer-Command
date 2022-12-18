@@ -41,7 +41,7 @@ public class DirectShotAimerState : AIAimerState
 
 		Vector3 shotTarget = CalcIntercept() + offset;
 		float aimDistance = Vector3.Distance(aimer.transform.position, shotTarget);
-		if( aimDistance < distanceThreshold && Time.time > shotTimestamp) {
+		if( aimDistance < distanceThreshold && Time.time > shotTimestamp && aimer.InAngle() ) {
 			TakeShot();
 		} else {
 			MoveAimer(shotTarget);

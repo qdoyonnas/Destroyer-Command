@@ -442,7 +442,7 @@ MonoBehaviour:
   minSpeed: 0.2
   maxSpeed: 0.8
   acceleration: 0.01
-  turnRate: 1
+  turnRate: 0.8
   aimRange: 180
   aimDeceleration: 1
   aimDeadZone: 0.005

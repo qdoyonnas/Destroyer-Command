@@ -5,12 +5,18 @@ using UnityEngine;
 public class TargetSense : MonoBehaviour
 {
 	public AIControls controls;
+	public List<Ship> targets;
+
+	private void Start()
+	{
+		targets = new List<Ship>();
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		Ship ship = other.GetComponent<Ship>();
 		if( ship && ship != controls.GetShip() ) {
-			controls.targets.Add(ship);
+			targets.Add(ship);
 		}
 	}
 
@@ -18,7 +24,7 @@ public class TargetSense : MonoBehaviour
 	{
 		Ship ship = other.GetComponent<Ship>();
 		if( ship != controls.GetShip() ) {
-			controls.targets.Remove(ship);
+			targets.Remove(ship);
 		}
 	}
 }

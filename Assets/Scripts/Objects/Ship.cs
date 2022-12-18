@@ -117,7 +117,9 @@ public class Ship : MonoBehaviour
         }
 
         if( inputs["turn"] != 0 ) {
-            transform.Rotate(0f, turnRate * inputs["turn"], 0f, Space.World);
+            float turnRateModifier = turnRate - (turnRate * (speed/maxSpeed));
+            float modifiedTurnRate = turnRate + turnRateModifier;
+            transform.Rotate(0f, modifiedTurnRate * inputs["turn"], 0f, Space.World);
         }
     }
     void HandleAimInput()

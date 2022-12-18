@@ -18,6 +18,6 @@ MonoBehaviour:
   charges: 6
   chargeTime: 0.5
   shotDelay: -1
-  shotVelocity: 1.2
+  shotVelocity: 1
   startAngle: 0
-  endAngle: 160
+  endAngle: 100

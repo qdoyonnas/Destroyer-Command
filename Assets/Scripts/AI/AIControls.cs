@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class AIControls : Controls
 {
-    public float aimSpeed = 2f;
+    public float aimSpeed = 4f;
+
+    public HazardSense hazardSense;
+    public TargetSense targetSense;
 
     protected AIState activeState;
     protected AIAimerState aimerState;
-
-    public List<Hazard> hazards;
-    public List<Ship> targets;
 
     // Start is called before the first frame update
     void Start()
@@ -24,9 +24,6 @@ public class AIControls : Controls
 
         ship.GetAimer().SetVisible(false);
 
-        hazards = new List<Hazard>();
-        targets = new List<Ship>();
-
         SetupSensors();
 
         activeState = new SearchingState(this);
@@ -38,11 +35,11 @@ public class AIControls : Controls
 
 	void SetupSensors()
     {
-        HazardSense hazard = ship.transform.Find("HazardSense").gameObject.AddComponent<HazardSense>();
-        hazard.controls = this;
+        hazardSense = ship.transform.Find("HazardSense").gameObject.AddComponent<HazardSense>();
+        hazardSense.controls = this;
 
-        TargetSense target = ship.transform.Find("TargetSense").gameObject.AddComponent<TargetSense>();
-        target.controls = this;
+        targetSense = ship.transform.Find("TargetSense").gameObject.AddComponent<TargetSense>();
+        targetSense.controls = this;
     }
 
     // Update is called once per frame
@@ -53,17 +50,6 @@ public class AIControls : Controls
 
 	protected override void ControlsUpdate()
 	{
-        for( int i = hazards.Count-1; i >= 0; i-- ) {
-            if( !hazards[i] ) {
-                hazards.RemoveAt(i);
-            }
-        }
-        for( int i = targets.Count-1; i >= 0; i-- ) {
-            if( !targets[i] ) {
-                targets.RemoveAt(i);
-            }
-        }
-
         activeState.Update();
         aimerState.Update();
 

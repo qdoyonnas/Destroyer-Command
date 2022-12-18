@@ -69,13 +69,11 @@ public class Aimer : MonoBehaviour
 
         UpdateWeaponDisplay();
     }
-
     void UpdateWeaponDisplay()
     {
         UpdateCharges();
         UpdateAngle();
     }
-
     void UpdateCharges()
     {
         int weaponMaxCharges = ship.GetActiveWeapon().maxCharges;
@@ -101,7 +99,7 @@ public class Aimer : MonoBehaviour
     }
     void UpdateAngle()
     {
-        bool inAngle = ship.GetActiveWeapon().InAngle(ship, transform);
+        bool inAngle = InAngle();
         if( inAngle == wasInAngle ) { return; }
 
         if( inAngle ) {
@@ -121,6 +119,11 @@ public class Aimer : MonoBehaviour
         }
 
         wasInAngle = inAngle;
+    }
+
+    public bool InAngle()
+    {
+        return ship.GetActiveWeapon().InAngle(ship, transform);
     }
 
     public void SetVisible(bool state)

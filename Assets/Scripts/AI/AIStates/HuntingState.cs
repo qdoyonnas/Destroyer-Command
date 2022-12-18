@@ -30,12 +30,7 @@ public class HuntingState : AIState
 	{
 		if( CheckStateChange() ) { return; }
 
-		if( ship.GetSpeed() < ship.maxSpeed ) {
-			controls.inputs["forward"] = 1f;
-		} else {
-			controls.inputs["forward"] = 0f;
-		}
-
+		
 		if( Time.time >= adjustTimestamp ) {
 			SetOffset();
 		}
@@ -49,6 +44,15 @@ public class HuntingState : AIState
 			controls.inputs["turn"] = 1f;
 		} else {
 			controls.inputs["turn"] = 0f;
+		}
+
+		float targetSpeed = ship.maxSpeed - (ship.maxSpeed * (Mathf.Abs(angle) / 180));
+		if( ship.GetSpeed() > targetSpeed) {
+			controls.inputs["forward"] = -1f;
+		} else if( ship.GetSpeed() < targetSpeed ) {
+			controls.inputs["forward" ] = 1f;
+		} else {
+			controls.inputs["forward"] = 0f;
 		}
 	}
 
@@ -64,7 +68,7 @@ public class HuntingState : AIState
 
 	bool CheckStateChange()
 	{
-		if( controls.hazards.Count > 0 ) {
+		if( controls.hazardSense.hazards.Count > 0 ) {
 			if( EvadeState.Trigger(controls) ) {
 				controls.SetState(new EvadeState(controls));
 				return true;
@@ -87,7 +91,7 @@ public class HuntingState : AIState
 
 	public static Ship Trigger(AIControls controls)
 	{
-		foreach(Ship ship in controls.targets) {
+		foreach(Ship ship in controls.targetSense.targets) {
 			Controls targetControls = ship.GetComponent<Controls>();
 			if( targetControls && targetControls.team != controls.team ) {
 				return ship;

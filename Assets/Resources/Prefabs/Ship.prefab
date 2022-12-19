@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 9134859455377976125}
   - component: {fileID: 9053804830425391930}
   - component: {fileID: 1542878061353860367}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: HazardSense
   m_TagString: Untagged
   m_Icon: {fileID: 0}

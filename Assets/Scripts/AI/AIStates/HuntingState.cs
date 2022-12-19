@@ -66,14 +66,9 @@ public class HuntingState : AIState
 		adjustTimestamp = Time.time + Random.Range(adjustTimingMin, adjustTimingMax);
 	}
 
-	bool CheckStateChange()
+	public override bool CheckStateChange()
 	{
-		if( controls.hazardSense.objects.Count > 0 ) {
-			if( EvadeState.Trigger(controls) ) {
-				controls.SetState(new EvadeState(controls));
-				return true;
-			}
-		}
+		if( base.CheckStateChange() ) { return true; }
 
 		if( !target ) {
 			controls.SetState(new SearchingState(controls));

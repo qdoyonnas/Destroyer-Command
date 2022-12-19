@@ -11,18 +11,20 @@ public class Projectile : MonoBehaviour
 
     LineRenderer lineRenderer;
 
-    Vector3 velocity = new Vector3();
-    float deathStamp = 0;
+    [HideInInspector] public Vector3 velocity = new Vector3();
+    [HideInInspector] public float deathStamp = 0f;
+    [HideInInspector] public float lifetime = 0f;
 
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    public void Initialize(Vector3 velocity, float deathStamp)
+    public void Initialize(Vector3 velocity, float lifetime)
     {
         this.velocity = velocity;
-        this.deathStamp = deathStamp;
+        this.lifetime = lifetime;
+        this.deathStamp = Time.time + lifetime;
     }
 
     // Update is called once per frame
@@ -37,7 +39,7 @@ public class Projectile : MonoBehaviour
         transform.Translate(velocity, Space.World);
         transform.LookAt(transform.position + velocity);
 
-        float lifetime = deathStamp - Time.time;
+        lifetime = deathStamp - Time.time;
 
         Vector3 lineEnd = transform.position + (velocity * (lifetime * 50));
         lineRenderer.SetPositions(new Vector3[] { transform.position, lineEnd });

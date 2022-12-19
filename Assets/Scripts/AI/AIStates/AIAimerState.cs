@@ -27,6 +27,11 @@ public class AIAimerState
 
 	}
 
+	virtual public bool CheckStateChange()
+	{
+		return false;
+	}
+
 	virtual public void End()
 	{
 

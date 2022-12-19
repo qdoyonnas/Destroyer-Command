@@ -94,7 +94,7 @@ public class DirectShotAimerState : AIAimerState
 		}
 	}
 
-	bool CheckStateChange()
+	public override bool CheckStateChange()
 	{
 		if( !target || shotsTaken >= shotCount ) {
 			controls.SetAimerState(new IdleAimerState(controls, null));

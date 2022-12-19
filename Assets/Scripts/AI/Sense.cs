@@ -33,13 +33,13 @@ public class Sense : MonoBehaviour
 	{
 		GameObject obj = null;
 		if( types.Contains(SenseType.Hazard) ) {
-				obj = other.GetComponentInParent<Hazard>() ? other.gameObject : null;
+			obj = other.GetComponentInParent<Hazard>() ? other.gameObject : null;
 		}
 		if( types.Contains(SenseType.Projectile) ) {
-				obj = other.GetComponentInParent<Projectile>() ? other.gameObject : null;
+			obj = other.GetComponentInParent<Projectile>() ? other.gameObject : null;
 		}
 		if( types.Contains(SenseType.Ship) ) {
-				obj = other.GetComponentInParent<Ship>() ? other.gameObject : null;
+			obj = other.GetComponentInParent<Ship>() ? other.gameObject : null;
 		}
 
 		if( obj != null ) {

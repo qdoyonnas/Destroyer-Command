@@ -5,7 +5,7 @@ using UnityEngine;
 public class EvadeState : AIState
 {
 	const float triggerAngle = 30f;
-	const float triggerDistance = 80f;
+	const float triggerDistance = 40f;
 
 	float wideTriggerAngle = 65f;
 
@@ -19,6 +19,7 @@ public class EvadeState : AIState
 	override public void Initialize()
 	{
 		hazard = Trigger(controls, wideTriggerAngle);
+		if (!hazard ) { CheckStateChange(); return; }
 		Vector3 delta = hazard.transform.position - ship.transform.position;
 		float angle = Vector3.SignedAngle(ship.transform.forward, delta, Vector3.up);
 		if( angle < 0f ) {
@@ -44,7 +45,7 @@ public class EvadeState : AIState
 		}
 	}
 
-	bool CheckStateChange()
+	public override bool CheckStateChange()
 	{
 		bool evade = true;
 		if( !hazard || RaycastAgainstHazard(controls, hazard) == null ) {

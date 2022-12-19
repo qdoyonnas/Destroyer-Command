@@ -57,11 +57,10 @@ public class Weapon: ScriptableObject
 		
 		Vector3 delta = aimer.position - launcher.transform.position;
 		delta.y = 0;
-		float lifeTime = (delta.magnitude / shotVelocity) / 50;
-		float deathStamp = Time.time + lifeTime;
+		float lifetime = (delta.magnitude / shotVelocity) / 50;
 
 		Vector3 velocity = delta.normalized * shotVelocity;
-		scriptProjectile.Initialize(velocity, deathStamp);
+		scriptProjectile.Initialize(velocity, lifetime);
 	}
 
 	public bool InAngle(Ship launcher, Transform aimer)

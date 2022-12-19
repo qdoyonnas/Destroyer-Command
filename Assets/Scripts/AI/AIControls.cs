@@ -8,6 +8,7 @@ public class AIControls : Controls
 
     public Sense hazardSense;
     public Sense targetSense;
+    public Sense projectileSense;
 
     protected AIState activeState;
     protected AIAimerState aimerState;
@@ -42,6 +43,10 @@ public class AIControls : Controls
         targetSense = ship.transform.Find("TargetSense").gameObject.AddComponent<Sense>();
         targetSense.controls = this;
         targetSense.types = new Sense.SenseType[] { Sense.SenseType.Ship };
+
+        projectileSense = ship.transform.Find("HazardSense").gameObject.AddComponent<Sense>();
+        projectileSense.controls = this;
+        projectileSense.types = new Sense.SenseType[] { Sense.SenseType.Projectile };
     }
 
     // Update is called once per frame

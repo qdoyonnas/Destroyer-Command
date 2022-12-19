@@ -35,14 +35,9 @@ public class SearchingState : AIState
 		AdjustAngle(delta);
 	}
 
-	bool CheckStateChange()
+	public override bool CheckStateChange()
 	{
-		if( controls.hazardSense.objects.Count > 0 ) {
-			if( EvadeState.Trigger(controls) ) {
-				controls.SetState(new EvadeState(controls));
-				return true;
-			}
-		}
+		if( base.CheckStateChange() ) { return true; }
 
 		if( controls.targetSense.objects.Count > 0 ) {
 			if( HuntingState.Trigger(controls) ) {

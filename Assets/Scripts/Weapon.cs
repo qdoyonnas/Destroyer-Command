@@ -20,6 +20,9 @@ public class Weapon: ScriptableObject
 	public float startAngle = 0f;
 	public float endAngle = 165f;
 
+	public float maxRange = 200f;
+	public float minRange = 5f;
+
 	public void Update()
 	{
 		if( charges < maxCharges ) {
@@ -68,6 +71,9 @@ public class Weapon: ScriptableObject
 		Vector3 delta = aimer.position - launcher.transform.position;
 		float angle = Vector3.Angle(launcher.transform.forward, delta);
 
-		return startAngle <= angle && angle <= endAngle;
+		bool inRange = minRange <= delta.magnitude && delta.magnitude <= maxRange;
+		bool inAngle = startAngle <= angle && angle <= endAngle;
+
+		return inRange && inAngle;
 	}
 }

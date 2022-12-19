@@ -21,3 +21,5 @@ MonoBehaviour:
   shotVelocity: 1
   startAngle: 0
   endAngle: 100
+  maxRange: 200
+  minRange: 10

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EvadeState : AIState
 {
 	const float triggerAngle = 30f;
-	const float triggerDistance = 40f;
+	const float triggerDistance = 60f;
 
 	float wideTriggerAngle = 65f;
 

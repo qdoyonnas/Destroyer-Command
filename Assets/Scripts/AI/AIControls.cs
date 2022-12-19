@@ -6,8 +6,8 @@ public class AIControls : Controls
 {
     public float aimSpeed = 4f;
 
-    public HazardSense hazardSense;
-    public TargetSense targetSense;
+    public Sense hazardSense;
+    public Sense targetSense;
 
     protected AIState activeState;
     protected AIAimerState aimerState;
@@ -35,11 +35,13 @@ public class AIControls : Controls
 
 	void SetupSensors()
     {
-        hazardSense = ship.transform.Find("HazardSense").gameObject.AddComponent<HazardSense>();
+        hazardSense = ship.transform.Find("HazardSense").gameObject.AddComponent<Sense>();
         hazardSense.controls = this;
+        hazardSense.types = new Sense.SenseType[] { Sense.SenseType.Hazard };
 
-        targetSense = ship.transform.Find("TargetSense").gameObject.AddComponent<TargetSense>();
+        targetSense = ship.transform.Find("TargetSense").gameObject.AddComponent<Sense>();
         targetSense.controls = this;
+        targetSense.types = new Sense.SenseType[] { Sense.SenseType.Ship };
     }
 
     // Update is called once per frame

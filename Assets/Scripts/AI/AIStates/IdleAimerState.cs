@@ -27,10 +27,10 @@ public class IdleAimerState : AIAimerState
 			return;
 		}
 
-		if( controls.targetSense.targets.Count > 0 ) {
+		if( controls.targetSense.objects.Count > 0 ) {
 			float smallestDistance = -1f;
-			Ship closestShip = null;
-			foreach( Ship ship in controls.targetSense.targets ) {
+			GameObject closestShip = null;
+			foreach( GameObject ship in controls.targetSense.objects ) {
 				Controls targetControls = ship.GetComponent<Controls>();
 				if( targetControls && targetControls.team != controls.team ) {
 					float distance = Vector3.Distance(ship.transform.position, controls.transform.position);
@@ -42,7 +42,7 @@ public class IdleAimerState : AIAimerState
 			}
 
 			if( closestShip ) {
-				StartAttackPattern(closestShip);
+				StartAttackPattern(closestShip.GetComponent<Ship>());
 			}
 		}
 	}

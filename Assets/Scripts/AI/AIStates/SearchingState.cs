@@ -37,14 +37,14 @@ public class SearchingState : AIState
 
 	bool CheckStateChange()
 	{
-		if( controls.hazardSense.hazards.Count > 0 ) {
+		if( controls.hazardSense.objects.Count > 0 ) {
 			if( EvadeState.Trigger(controls) ) {
 				controls.SetState(new EvadeState(controls));
 				return true;
 			}
 		}
 
-		if( controls.targetSense.targets.Count > 0 ) {
+		if( controls.targetSense.objects.Count > 0 ) {
 			if( HuntingState.Trigger(controls) ) {
 				controls.SetState(new HuntingState(controls));
 				return true;

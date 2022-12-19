@@ -9,7 +9,7 @@ public class EvadeState : AIState
 
 	float wideTriggerAngle = 65f;
 
-	Hazard hazard;
+	GameObject hazard;
 
 	public EvadeState(AIControls controls)
 		: base(controls)
@@ -65,7 +65,7 @@ public class EvadeState : AIState
 		controls.inputs["forward"] = 0f;
 	}
 
-	public static Hazard RaycastAgainstHazard(AIControls controls, Hazard hazard)
+	public static GameObject RaycastAgainstHazard(AIControls controls, GameObject hazard)
 	{
 		Ship ship = controls.GetShip();
 
@@ -84,19 +84,19 @@ public class EvadeState : AIState
 		foreach( RaycastHit hit in hits ) {
 			Hazard hitHazard = hit.collider.GetComponentInParent<Hazard>();
 			if( hitHazard ) {
-				return hitHazard;
+				return hitHazard.gameObject;
 			}
 		}
 
 		return null;
 	}
 
-	public static Hazard Trigger(AIControls controls, float triggerAngle = triggerAngle, float triggerDistance = triggerDistance)
+	public static GameObject Trigger(AIControls controls, float triggerAngle = triggerAngle, float triggerDistance = triggerDistance)
 	{
 		Ship ship = controls.GetShip();
 
-		foreach( Hazard hazard in controls.hazardSense.hazards ) {
-			Hazard hazardest = RaycastAgainstHazard(controls, hazard);
+		foreach( GameObject hazard in controls.hazardSense.objects ) {
+			GameObject hazardest = RaycastAgainstHazard(controls, hazard);
 			if( hazardest ) {
 				return hazardest;
 			}

@@ -72,8 +72,7 @@
     <Compile Include="Assets\Scripts\AI\AIStates\HuntingState.cs" />
     <Compile Include="Assets\Scripts\AI\AIStates\IdleAimerState.cs" />
     <Compile Include="Assets\Scripts\AI\AIStates\SearchingState.cs" />
-    <Compile Include="Assets\Scripts\AI\HazardSense.cs" />
-    <Compile Include="Assets\Scripts\AI\TargetSense.cs" />
+    <Compile Include="Assets\Scripts\AI\Sense.cs" />
     <Compile Include="Assets\Scripts\CameraAnchor.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />

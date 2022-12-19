@@ -68,7 +68,7 @@ public class HuntingState : AIState
 
 	bool CheckStateChange()
 	{
-		if( controls.hazardSense.hazards.Count > 0 ) {
+		if( controls.hazardSense.objects.Count > 0 ) {
 			if( EvadeState.Trigger(controls) ) {
 				controls.SetState(new EvadeState(controls));
 				return true;
@@ -91,10 +91,10 @@ public class HuntingState : AIState
 
 	public static Ship Trigger(AIControls controls)
 	{
-		foreach(Ship ship in controls.targetSense.targets) {
+		foreach(GameObject ship in controls.targetSense.objects) {
 			Controls targetControls = ship.GetComponent<Controls>();
 			if( targetControls && targetControls.team != controls.team ) {
-				return ship;
+				return ship.GetComponent<Ship>();
 			}
 		}
 

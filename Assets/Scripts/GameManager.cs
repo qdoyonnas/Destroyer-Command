@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Random.InitState(worldSeed);
+
         mainCamera = GameObject.Find("CameraAnchor").GetComponent<CameraAnchor>();
 
         players = new List<PlayerControls>();
@@ -51,8 +53,8 @@ public class GameManager : MonoBehaviour
         mainCamera.AddTarget(ship.transform);
 
 
-        for( int i = 0; i < 50; i++ ) {
-            Vector3 spawnPosition = new Vector3(Random.Range(-1000, 1000), 0f, Random.Range(-1000, 1000));
+        for( int i = 0; i < 200; i++ ) {
+            Vector3 spawnPosition = new Vector3(Random.Range(-1500, 1500), 0f, Random.Range(-1500, 1500));
             GameObject asteroidObject = Instantiate<GameObject>(asteroidPrefab, spawnPosition, Quaternion.identity);
             Asteroid asteroid = asteroidObject.GetComponent<Asteroid>();
             asteroid.Initialize();
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
 
 	void Update()
 	{
-		if( Input.GetKeyDown(KeyCode.Backspace) ) {
+		if( Input.GetKeyDown(KeyCode.Backspace) && players.Count > 0 ) {
             float spawnAngle = Random.Range(0, 360);
             Vector3 spawnPosition = new Vector3(
                 players[0].transform.position.x + Random.Range(-200, 200), 

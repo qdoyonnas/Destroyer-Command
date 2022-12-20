@@ -17,6 +17,8 @@ public class DirectShotAimerState : AIAimerState
 	float offsetRange = 30f;
 
 	float distanceThreshold = 3f;
+	float minDangerDistance = 40f;
+	float dangerAngle = 20f;
 
 	public DirectShotAimerState(AIControls controls, Ship target)
 		: base(controls, target)
@@ -41,11 +43,28 @@ public class DirectShotAimerState : AIAimerState
 
 		Vector3 shotTarget = CalcIntercept() + offset;
 		float aimDistance = Vector3.Distance(aimer.transform.position, shotTarget);
-		if( aimDistance < distanceThreshold && Time.time > shotTimestamp && aimer.InAngle() ) {
+		if( aimDistance < distanceThreshold 
+			&& Time.time > shotTimestamp 
+			&& aimer.InAngle()
+			&& !CheckIsDanger(shotTarget) )
+		{
 			TakeShot();
 		} else {
 			MoveAimer(shotTarget);
 		}
+	}
+
+	bool CheckIsDanger(Vector3 shotTarget)
+	{
+		Vector3 delta = shotTarget - controls.transform.position;
+		if( delta.magnitude < minDangerDistance ) {
+			float angle = Vector3.Angle(controls.transform.forward, delta);
+			if( angle < dangerAngle ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	Vector3 CalcIntercept()

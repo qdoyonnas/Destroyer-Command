@@ -100,6 +100,9 @@ MonoBehaviour:
   explosionRadius: 30
   expansionRate: 0.5
   explosionLife: 2
+  velocity: {x: 0, y: 0, z: 0}
+  deathStamp: 0
+  lifetime: 0
 --- !u!135 &857707141239667902
 SphereCollider:
   m_ObjectHideFlags: 0

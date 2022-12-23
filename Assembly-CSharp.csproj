@@ -65,14 +65,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\AI\AIControls.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\AIAimerState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\AIState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\DirectShotAimerState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\EvadeState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\HuntingState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\IdleAimerState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\ProjectedEvadeState.cs" />
-    <Compile Include="Assets\Scripts\AI\AIStates\SearchingState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Aimer\AIAimerState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Aimer\DirectShotAimerState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Aimer\IdleAimerState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Aimer\SweepAimerState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Behaviour\AIState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Behaviour\EvadeState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Behaviour\HuntingState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Behaviour\ProjectedEvadeState.cs" />
+    <Compile Include="Assets\Scripts\AI\AIStates\Behaviour\SearchingState.cs" />
     <Compile Include="Assets\Scripts\AI\Sense.cs" />
     <Compile Include="Assets\Scripts\CameraAnchor.cs" />
     <Compile Include="Assets\Scripts\Controls.cs" />

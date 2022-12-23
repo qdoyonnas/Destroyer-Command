@@ -92,11 +92,13 @@ public class GameManager : MonoBehaviour
         if( playerNumber == -1 ) {
             AIControls ai = shipObject.AddComponent<AIControls>();
             ai.team = teams[team];
+            shipObject.name = "AI_" + shipObject.name;
         } else {
             PlayerControls player = shipObject.AddComponent<PlayerControls>();
             player.playerNumber = playerNumber;
             player.team = teams[team];
             players.Add(player);
+            shipObject.name = "Player_" + shipObject.name;
         }
 
         ship.Initialize();

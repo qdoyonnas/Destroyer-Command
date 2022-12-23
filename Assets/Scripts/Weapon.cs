@@ -76,4 +76,17 @@ public class Weapon: ScriptableObject
 
 		return inRange && inAngle;
 	}
+
+	public Vector3 CalcIntercept(Ship launcher, Ship target, float leadingOffset = 1)
+	{
+		Vector3 delta = launcher.transform.position - target.transform.position;
+		float distance = delta.magnitude;
+		
+		float angle = Vector3.Angle(target.transform.forward, delta);
+		float timeToTarget = (distance / shotVelocity) * Mathf.Max(1, angle / 45);
+		Vector3 targetVelocity = target.transform.forward * (target.GetSpeed() * leadingOffset);
+		Vector3 intercept = target.transform.position + (targetVelocity * timeToTarget);
+
+		return intercept;
+	}
 }

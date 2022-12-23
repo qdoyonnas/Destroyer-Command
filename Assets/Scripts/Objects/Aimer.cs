@@ -53,6 +53,8 @@ public class Aimer : MonoBehaviour
 
     public void UpdateAimer(Vector3 positionDelta)
     {
+        if( !enabled ) { return; }
+
         transform.Translate(positionDelta);
         transform.Translate(aimVelocity);
 

@@ -5,6 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(LineRenderer))]
 public class Ship : MonoBehaviour
 {
+    bool _disabled = true;
+    public bool disabled {
+        get {
+            return _disabled;
+        }
+        set {
+            SetDisabled(value);
+        }
+    }
+
     [Header("Movement")]
     public float minSpeed = 0.05f;
     public float maxSpeed = 1f;
@@ -29,8 +39,10 @@ public class Ship : MonoBehaviour
 
     public Dictionary<string, float> inputs;
 
+    private new CapsuleCollider collider;
     float speed = 0;
 
+    public Controls controls;
     Aimer aimer;
     LineRenderer lineRenderer;
 
@@ -39,6 +51,7 @@ public class Ship : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
 
         speed = minSpeed;
+        collider = GetComponent<CapsuleCollider>();
 
         GameObject aimPrefab = Resources.Load<GameObject>("Prefabs/Aim");
         GameObject aimerObject = Instantiate( aimPrefab, transform.position + (transform.forward * 2), Quaternion.identity );
@@ -72,7 +85,7 @@ public class Ship : MonoBehaviour
 
     void FixedUpdate()
     {
-        HandleInputs();
+        if( !disabled ) { HandleInputs(); }
 
         Vector3 oldPosition = transform.position;
         transform.Translate(transform.forward * speed, Space.World);
@@ -93,6 +106,14 @@ public class Ship : MonoBehaviour
     public float GetSpeed()
     {
         return speed;
+    }
+    public Team GetTeam()
+    {
+        return controls.team;
+    }
+    public void SetSpeed(float value)
+    {
+        speed = value;
     }
     public Weapon GetActiveWeapon()
     {
@@ -144,5 +165,16 @@ public class Ship : MonoBehaviour
         if( explosion != null) {
             explosion.Initialize(explosionRadius, explosionLife, expansionRate);
         }
+    }
+
+    public void SetCollidable(bool state)
+    {
+        collider.enabled = state;
+    }
+    public void SetDisabled(bool state)
+    {
+        _disabled = state;
+        if( controls is PlayerControls ) { aimer.SetVisible(!state); }
+        aimer.transform.position = transform.position;
     }
 }

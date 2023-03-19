@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CameraAnchor : MonoBehaviour
 {
-    List<Transform> targets;
+    public List<Transform> targets;
+    public new Camera camera;
 
     public float speed = 1;
 
 	private void Awake()
 	{
+        camera = GetComponentInChildren<Camera>();
         targets = new List<Transform>();
 	}
 

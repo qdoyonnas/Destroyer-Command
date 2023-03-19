@@ -6,6 +6,7 @@ public class Controls : MonoBehaviour
 {
     public Team team;
     public Dictionary<string, float> inputs;
+    protected Dictionary<string, float> lastInputs;
     
     protected Ship ship;
 
@@ -18,8 +19,10 @@ public class Controls : MonoBehaviour
         inputs["aimHorizontal"] = 0;
         inputs["centerAim"] = 0;
         inputs["mainFire"] = 0;
+        lastInputs = new Dictionary<string, float>(inputs);
 
         ship = gameObject.GetComponent<Ship>();
+        ship.controls = this;
         ship.SetHullColor(team.hullColor);
         ship.SetTrailColor(team.trailColor);
     }

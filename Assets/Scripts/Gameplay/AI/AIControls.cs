@@ -36,17 +36,22 @@ public class AIControls : Controls
 
 	void SetupSensors()
     {
-        hazardSense = ship.transform.Find("HazardSense").gameObject.AddComponent<Sense>();
+        GameObject hazardSenseObject = ship.transform.Find("HazardSense").gameObject;
+        hazardSense = hazardSenseObject.AddComponent<Sense>();
         hazardSense.controls = this;
         hazardSense.types = new Sense.SenseType[] { Sense.SenseType.Hazard };
 
-        targetSense = ship.transform.Find("TargetSense").gameObject.AddComponent<Sense>();
+        GameObject targetSenseObject = ship.transform.Find("TargetSense").gameObject;
+        targetSense = targetSenseObject.AddComponent<Sense>();
         targetSense.controls = this;
         targetSense.types = new Sense.SenseType[] { Sense.SenseType.Ship };
 
-        projectileSense = ship.transform.Find("HazardSense").gameObject.AddComponent<Sense>();
+        projectileSense = hazardSenseObject.AddComponent<Sense>();
         projectileSense.controls = this;
         projectileSense.types = new Sense.SenseType[] { Sense.SenseType.Projectile };
+
+        hazardSenseObject.GetComponent<SphereCollider>().enabled = true;
+        targetSenseObject.GetComponent<SphereCollider>().enabled = true;
     }
 
     // Update is called once per frame
